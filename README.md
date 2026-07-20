@@ -86,9 +86,9 @@ export SQLITE_CONNECTION="./data.db"   # or ":memory:" for an ephemeral in-memor
 ```javascript
 import { bigquery } from "sql-spider";
 
-const query = "SELECT word, COUNT(*) as word_count FROM bigquery-public-data.samples.shakespeare GROUP BY ALL ORDER BY 2 DESC LIMIT 10";
+const sql = "SELECT word, COUNT(*) as word_count FROM bigquery-public-data.samples.shakespeare GROUP BY ALL ORDER BY 2 DESC LIMIT 10";
 
-const rows = await bigquery.query(query);
+const rows = await bigquery.query(sql);
 for (const row of rows)
     console.log(JSON.stringify(row));
 ```
@@ -98,11 +98,12 @@ for (const row of rows)
 ```javascript
 import { snowflake } from "sql-spider";
 
-const query = "SELECT table_schema, table_name, table_type FROM INFORMATION_SCHEMA.TABLES WHERE table_schema != 'INFORMATION_SCHEMA' LIMIT 10";
+const sql = "SELECT table_schema, table_name, table_type FROM INFORMATION_SCHEMA.TABLES WHERE table_schema != 'INFORMATION_SCHEMA' LIMIT 10";
 
-const rows = await snowflake.query(query);
+const rows = await snowflake.query(sql);
 for (const row of rows)
     console.log(JSON.stringify(row));
+snowflake.close();
 ```
 
 ## PostgreSQL example
@@ -115,9 +116,10 @@ await postgres.insert("users", [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }
 const rows = await postgres.query("SELECT * FROM users WHERE id = $1", [1]);
 for (const row of rows)
     console.log(JSON.stringify(row));
+postgres.close();
 ```
 
-The `postgres` connector also works with databases that speak the PostgreSQL wire protocol — CockroachDB, Redshift, YugabyteDB, AlloyDB, TimescaleDB — by pointing it at a different connection string. [more info](docs/postgres-compatible-databases.md)
+> The `postgres` connector also works with databases that speak the PostgreSQL wire protocol — CockroachDB, Redshift, YugabyteDB, AlloyDB, TimescaleDB — by pointing it at a different connection string. [more info](docs/postgres-compatible-databases.md)
 
 ## MySQL example
 ```javascript
@@ -129,9 +131,10 @@ await mysql.insert("users", [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }]);
 const rows = await mysql.query("SELECT * FROM users WHERE id = ?", [1]);
 for (const row of rows)
     console.log(JSON.stringify(row));
+mysql.close();
 ```
 
-The `mysql` connector also works with databases that speak the MySQL wire protocol, such as MariaDB.
+> The `mysql` connector also works with databases that speak the MySQL wire protocol, such as MariaDB.
 
 ## SQLite example
 ```javascript
