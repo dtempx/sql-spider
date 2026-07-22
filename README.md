@@ -6,12 +6,16 @@ Instead of juggling different SDKs and connection patterns, SQL-Spider abstracts
 
 ## Supported Databases
 - **PostgreSQL** - Open-source relational database
-- **MySQL** - The world's most popular open-source relational database (also drives MySQL-compatible databases like MariaDB)
-- **Microsoft SQL Server** - Microsoft's relational database engine
+- **MySQL** - Open-source relational database
+- **Microsoft SQL Server** - Microsoft proprietary relational database engine
 - **SQLite** - Embedded, file-based (or in-memory) SQL database
 - **DuckDB** - Embedded, file-based (or in-memory) analytical (OLAP) database
-- **Snowflake** - Cloud-native data platform
+- **Snowflake** - Multi-cloud data warehouse *(runs on AWS, Azure, or GCP)*
 - **BigQuery** - Google Cloud's serverless data warehouse
+
+> Postgres also works with databases that speak the PostgreSQL wire protocol, namelyCockroachDB, Redshift, YugabyteDB, AlloyDB, TimescaleDB. [Learn more](docs/postgres-compatible-databases.md)
+
+> MySQL also works with MySQL-compatible databases like MariaDB.
 
 ## Why SQL-Spider?
 Instead of learning different APIs for each database engine:
@@ -47,10 +51,10 @@ const r3 = await mssql.query("SELECT ...");
 ```
 
 ## Key Features
-- **Unified Data Interface**: Same query interface across all supported databases
-- **Data Normalization**: Consistent row format result across databases (array of javascript objects)
-- **Runtime Connector Abstraction**: Decide at runtime which database environment to connect to
-- **Parameterized Queries**: Supports safe parameter binding — positional and/or named depending on the database ([Learn more](docs/query-parameters.md))
+- **Unified Data Interface**: Same query interface across all supported databases.
+- **Data Normalization**: Consistent row format result across databases *(returns an array of javascript objects)*.
+- **Runtime Connector Abstraction**: Decide at runtime which database environment to connect to.
+- **Parameterized Queries**: Supports safe parameter binding—positional and/or named depending on the database. [Learn more](docs/query-parameters.md)
 
 ## Installation
 ```bash
@@ -77,8 +81,6 @@ postgres.close();
 
 > Set the `POSTGRES_CONNECTION` environment variable to a value like `postgres://myuser:mypass@localhost:5432/mydb`.
 
-> The `postgres` connector also works with databases that speak the PostgreSQL wire protocol — CockroachDB, Redshift, YugabyteDB, AlloyDB, TimescaleDB — by pointing it at a different connection string. [Learn more](docs/postgres-compatible-databases.md)
-
 ## MySQL example
 ```javascript
 import { mysql } from "sql-spider";
@@ -93,8 +95,6 @@ mysql.close();
 ```
 
 > Set the `MYSQL_CONNECTION` environment variable to a value like `mysql://myuser:mypass@localhost:3306/mydb`.
-
-> The `mysql` connector also works with databases that speak the MySQL wire protocol, such as MariaDB.
 
 ## SQL Server example
 ```javascript
