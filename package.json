@@ -1,6 +1,6 @@
 {
   "name": "sql-spider",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple data adapter that provides a single, consistent interface for querying across PostgreSQL, MySQL, SQLite, SQL Server, BigQuery, and Snowflake",
   "license": "MIT",
   "type": "module",
@@ -26,18 +26,19 @@
   },
   "homepage": "https://github.com/dtempx/sql-spider",
   "keywords": [
-    "adapter",
-    "data",
+    "data adapter",
     "database",
     "data warehouse",
-    "bigquery",
-    "snowflake",
-    "sqlite",
+    "duckdb",
+    "mssql",
+    "mysql",
     "postgres",
     "postgresql",
-    "mysql",
-    "mssql",
-    "sqlserver"
+    "sqlite",
+    "sqlserver",
+    "universal",
+    "bigquery",
+    "snowflake"
   ],
   "scripts": {
     "build": "npx tsc",

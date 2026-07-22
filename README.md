@@ -1,6 +1,6 @@
 # SQL-Spider
 
-A simple data adapter that provides a single, consistent interface for querying across PostgreSQL, MySQL, SQLite, DuckDB, Snowflake, BigQuery, and SQL Server.
+A simple data adapter that provides a single, consistent interface for querying across PostgreSQL, MySQL, Microsoft SQL Server, SQLite, DuckDB, Snowflake, and BigQuery.
 
 Instead of juggling different SDKs and connection patterns, SQL-Spider abstracts away the complexity so you can focus on your data.
 
