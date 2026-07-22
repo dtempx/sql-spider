@@ -1,8 +1,22 @@
 # Environment Variables
 
 Each connector's default instance (the one you get from `import { <name> } from
-"sql-spider"`) reads its connection info from an environment variable. This
-appnote documents the exact variable and string format each one expects.
+"sql-spider"`) reads its connection info from an environment variable. Use this
+table to find the exact variable and string format each one expects; the
+sections below document each connector in detail.
+
+| Connector | Variable | Format |
+|---|---|---|
+| BigQuery | `GOOGLE_APPLICATION_CREDENTIALS` | path to service account key JSON (or ambient credentials) |
+| Snowflake | `SNOWFLAKE_CONNECTION` | `key:value,key:value` (`account`, `username`, `password`, `database`, `warehouse`, …) |
+| PostgreSQL | `POSTGRES_CONNECTION` | `postgres://<user>:<password>@<host>:<port>/<database>` |
+| MySQL | `MYSQL_CONNECTION` | `mysql://<user>:<password>@<host>:<port>/<database>` |
+| Microsoft SQL Server | `MSSQL_CONNECTION` | `Server=<host>,<port>;Database=<database>;User Id=<user>;Password=<password>;Encrypt=true` |
+| SQLite | `SQLITE_CONNECTION` | file path, or `:memory:` (default when unset) |
+| DuckDB | `DUCKDB_CONNECTION` | file path, or `:memory:` (default when unset) |
+
+Pool size overrides (where supported): `SNOWFLAKE_POOL_MAX`, `POSTGRES_POOL_MAX`,
+`MYSQL_POOL_MAX`, `MSSQL_POOL_MAX`.
 
 Field names below are **generic placeholders** — substitute your own values.
 Do not include the angle brackets.
@@ -130,16 +144,12 @@ export SQLITE_CONNECTION="<path-to-file>.db"   # e.g. ./data.db
 export SQLITE_CONNECTION=":memory:"            # explicit in-memory database
 ```
 
-## Summary
+## DuckDB
 
-| Connector | Variable | Format |
-|---|---|---|
-| BigQuery | `GOOGLE_APPLICATION_CREDENTIALS` | path to service account key JSON (or ambient credentials) |
-| Snowflake | `SNOWFLAKE_CONNECTION` | `key:value,key:value` (`account`, `username`, `password`, `database`, `warehouse`, …) |
-| PostgreSQL | `POSTGRES_CONNECTION` | `postgres://<user>:<password>@<host>:<port>/<database>` |
-| MySQL | `MYSQL_CONNECTION` | `mysql://<user>:<password>@<host>:<port>/<database>` |
-| Microsoft SQL Server | `MSSQL_CONNECTION` | `Server=<host>,<port>;Database=<database>;User Id=<user>;Password=<password>;Encrypt=true` |
-| SQLite | `SQLITE_CONNECTION` | file path, or `:memory:` (default when unset) |
+Set `DUCKDB_CONNECTION` to a database file path. When unset, it defaults to an
+in-memory database that is discarded when the process exits.
 
-Pool size overrides (where supported): `SNOWFLAKE_POOL_MAX`, `POSTGRES_POOL_MAX`,
-`MYSQL_POOL_MAX`, `MSSQL_POOL_MAX`.
+```bash
+export DUCKDB_CONNECTION="<path-to-file>.duckdb"   # e.g. ./data.duckdb
+export DUCKDB_CONNECTION=":memory:"                # explicit in-memory database
+```

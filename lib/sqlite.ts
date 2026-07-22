@@ -3,18 +3,33 @@ import chalk from "chalk";
 import { BaseConnector, logExecute, logExecuteResult, logQuery, logQueryResult, safeValue, wrapQueryError, type Connector } from "./utilities.js";
 
 /**
+ * Where a local database's file lives on disk. Accept either a bare path string
+ * or a `{ file }` object so callers can use the terse form or the same object
+ * shape the server backends take. Omit it (or pass `":memory:"`) for an
+ * ephemeral in-memory database.
+ */
+export type SqliteConfig = string | { file?: string };
+
+// Resolve the accepted config shapes down to a single file path.
+function resolveFile(config: SqliteConfig = ":memory:"): string {
+    if (typeof config === "string")
+        return config;
+    return config.file ?? ":memory:";
+}
+
+/**
  * A SQLite connector backed by an explicit database file (or ":memory:"),
  * instead of reading `SQLITE_CONNECTION` from the environment. Each instance owns
- * its own connection, so an app can open several databases at once. Omit `file`
+ * its own connection, so an app can open several databases at once. Omit `config`
  * to default to an in-memory database.
  */
 export class SqliteConnector extends BaseConnector {
     private file: string;
     private db: Database.Database | undefined;
 
-    constructor(file: string = ":memory:") {
+    constructor(config: SqliteConfig = ":memory:") {
         super();
-        this.file = file;
+        this.file = resolveFile(config);
     }
 
     private getDatabase(): Database.Database {
@@ -97,8 +112,8 @@ export class SqliteConnector extends BaseConnector {
  * Build a SQLite connector. Retained as a thin wrapper over
  * `new SqliteConnector(...)` so existing callers keep working.
  */
-export function createSqlite(file: string = ":memory:"): Connector {
-    return new SqliteConnector(file);
+export function createSqlite(config: SqliteConfig = ":memory:"): Connector {
+    return new SqliteConnector(config);
 }
 
 // The default instance: lazily built from `SQLITE_CONNECTION` (or ":memory:") on

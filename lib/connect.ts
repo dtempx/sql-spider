@@ -1,10 +1,12 @@
 import * as bigquery from "./bigquery.js";
+import * as duckdb from "./duckdb.js";
 import * as mssql from "./mssql.js";
 import * as mysql from "./mysql.js";
 import * as postgres from "./postgres.js";
 import * as snowflake from "./snowflake.js";
 import * as sqlite from "./sqlite.js";
 import { BigQueryConnector } from "./bigquery.js";
+import { DuckDBConnector } from "./duckdb.js";
 import { MssqlConnector } from "./mssql.js";
 import { MysqlConnector } from "./mysql.js";
 import { PostgresConnector } from "./postgres.js";
@@ -19,6 +21,7 @@ import type { Connector } from "./utilities.js";
  */
 const registry = {
     bigquery: { default: bigquery, create: (config?: any) => new BigQueryConnector(config) },
+    duckdb: { default: duckdb, create: (config?: any) => new DuckDBConnector(config) },
     mssql: { default: mssql, create: (config?: any) => new MssqlConnector(config) },
     mysql: { default: mysql, create: (config?: any) => new MysqlConnector(config) },
     postgres: { default: postgres, create: (config?: any) => new PostgresConnector(config) },

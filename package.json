@@ -1,6 +1,6 @@
 {
   "name": "sql-spider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple data adapter that provides a single, consistent interface for querying across PostgreSQL, MySQL, SQLite, SQL Server, BigQuery, and Snowflake",
   "license": "MIT",
   "type": "module",
@@ -44,6 +44,7 @@
     "test": "npx mocha"
   },
   "dependencies": {
+    "@duckdb/node-api": "^1.5.4-r.1",
     "@google-cloud/bigquery": "^8.3.1",
     "better-sqlite3": "^12.11.1",
     "chalk": "^5.6.2",
