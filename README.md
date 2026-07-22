@@ -2,34 +2,34 @@
 
 A simple data adapter that provides a single, consistent interface for querying across PostgreSQL, MySQL, Microsoft SQL Server, SQLite, DuckDB, Snowflake, and BigQuery.
 
-Instead of juggling different SDKs and connection patterns, SQL-Spider abstracts away the complexity so you can focus on your data.
+Instead of juggling different SDKs and connection patterns, SQL-Spider abstracts away the complexity so you can focus on your data. Really useful when dealing with more than one database.
 
 ## Supported Databases
 - **PostgreSQL** - Open-source relational database
-- **MySQL** - Open-source relational database
+- **MySQL** - Another open-source relational database
 - **Microsoft SQL Server** - Microsoft proprietary relational database engine
 - **SQLite** - Embedded, file-based (or in-memory) SQL database
 - **DuckDB** - Embedded, file-based (or in-memory) analytical (OLAP) database
 - **Snowflake** - Multi-cloud data warehouse *(runs on AWS, Azure, or GCP)*
 - **BigQuery** - Google Cloud's serverless data warehouse
 
-> Postgres also works with databases that speak the PostgreSQL wire protocol, namelyCockroachDB, Redshift, YugabyteDB, AlloyDB, TimescaleDB. [Learn more](docs/postgres-compatible-databases.md)
+> Postgres also works with databases that speak the PostgreSQL wire protocol—namely CockroachDB, Redshift, YugabyteDB, AlloyDB, TimescaleDB. [Learn more](docs/postgres-compatible-databases.md)
 
 > MySQL also works with MySQL-compatible databases like MariaDB.
 
 ## Why SQL-Spider?
-Instead of learning different APIs for each database engine:
+Use one simple, consistent interface instead of learning different APIs for each different database engine.
 
+Without SQL-Spider—different patterns for each database...
 ```javascript
-// Without SQL-Spider - different patterns for each database engine
-import pg from 'pg';
-import mysql from 'mysql2/promise';
 
 // Postgres setup
+import pg from 'pg';
 const pool = new pg.Pool({ connectionString: 'postgres://...' });
 const { rows } = await pool.query('SELECT ...');
 
 // MySQL setup
+import mysql from 'mysql2/promise';
 const connection = await mysql.createConnection({ host: '...', user: '...' });
 const [rows] = await connection.execute('SELECT ...');
 
@@ -39,10 +39,9 @@ const pool = await mssql.connect('Server=host,1433;Database=db;User Id=sa;Passwo
 const { recordset } = await pool.request().query('SELECT ...');
 ```
 
-Use one simple, consistent interface:
 
+With SQL-Spider, same pattern everywhere
 ```javascript
-// With SQL-Spider - same pattern everywhere
 import { postgres, mysql, mssql } from "sql-spider";
 
 const r1 = await postgres.query("SELECT ...");
@@ -168,7 +167,7 @@ for (const row of rows)
 > Uses Google Cloud default credentials or a service account key specified in the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. No connection string is required when running within Google Cloud.
 
 ## Local Databases
-SQLite and DuckDB are *embedded* — the database is a file on disk (or in memory) rather than a server you connect to. [Learn more](docs/local-databases.md)
+SQLite and DuckDB are *embedded*—the database is a file on disk (or in memory) rather than a server you connect to. [Learn more](docs/local-databases.md)
 
 ## Abstract `connect` Function
 The `connect` function enables the creation of an *abstract* database connection, where the *concrete* backend behind it is decided while the program is running—not fixed in the source by an `import`. [Learn more](docs/connector-abstraction.md)
