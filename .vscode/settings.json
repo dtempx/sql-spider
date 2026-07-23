@@ -1,9 +1,0 @@
-{
-    "files.exclude": {
-        "**/*.js": {"when": "$(basename).ts"},
-        "**/*.js.map": true,
-        "**/*.d.ts": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true
-    }
-}
